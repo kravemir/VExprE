@@ -6,9 +6,8 @@ import org.kravemir.vexpre.api.InputContext;
 import org.kravemir.vexpre.parser.VExprELexer;
 import org.kravemir.vexpre.parser.VExprEParser;
 
-/**
- * Created by miroslav on 5/1/16.
- */
+import static org.junit.Assert.assertEquals;
+
 public abstract class AbstractParserTest {
     protected double evaluateExpr(String expr, InputContext context) {
         VExprELexer lexer = new VExprELexer(new ANTLRInputStream(expr));
@@ -17,10 +16,11 @@ public abstract class AbstractParserTest {
         return parser.expr().value.asDouble();
     }
 
-    protected double evaluateExprWithoutContext(String expr) {
-        VExprELexer lexer = new VExprELexer(new ANTLRInputStream(expr));
-        VExprEParser parser = new VExprEParser(new CommonTokenStream(lexer));
-        parser.setInputContext(new InputContextImpl());
-        return parser.expr().value.asDouble();
+    protected void checkExpr(String expr, Double val) {
+        checkExpr(expr,val,new InputContextImpl());
+    }
+
+    protected void checkExpr(String expr, Double val, InputContext context) {
+        assertEquals(val,evaluateExpr(expr,context),0.001);
     }
 }
