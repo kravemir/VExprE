@@ -1,0 +1,54 @@
+apply plugin: 'java'
+
+group 'org.kravemir.vexpre'
+version '0.1'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.antlr:antlr4:4.5.3'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.antlr:antlr4:4.5.3'
+    compile 'org.apache.commons:commons-lang3:3.4'
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+sourceSets {
+    main.java.srcDirs += "${buildDir}/generated/main/java"
+}
+
+/*
+ * compile lexer classes using ANTLR 4
+ */
+task compileLexer(type: JavaExec) {
+    def pkg = 'org.kravemir.vexpre.parser'
+    def oDir = "${buildDir}/generated/main/java/org/kravemir/vexpre/parser"
+
+    main = "org.antlr.v4.Tool"
+    classpath = buildscript.configurations.classpath
+    workingDir = 'src/main/'
+
+    args = [
+            '-package', pkg,
+            '-o', oDir,
+            '-no-listener',
+            'VExprE.g'
+    ]
+}
+
+compileJava {
+    dependsOn compileLexer
+}
+
