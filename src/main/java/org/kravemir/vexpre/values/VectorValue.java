@@ -13,18 +13,13 @@ import java.util.Arrays;
 public class VectorValue extends AbstractValue {
     /* TODO-jaro: implement */
 
-    private final int dimension;
     private final Double[] values;
 
-    public VectorValue(int dimension, Double... values) {
-        assert (values.length == dimension);
-        this.dimension = dimension;
+    public VectorValue(Double... values) {
         this.values = values;
     }
 
-    public VectorValue(int dimension, Value... values) {
-        assert (values.length == dimension);
-        this.dimension = dimension;
+    public VectorValue(Value... values) {
         this.values = Arrays.stream(values).map(value -> value.asDouble()).toArray(Double[]::new);
     }
 
@@ -33,7 +28,7 @@ public class VectorValue extends AbstractValue {
         if(right instanceof DoubleValue) {
             double rightVal = right.asDouble();
             return new VectorValue(
-                    dimension, Arrays.stream(values).map(value -> value * rightVal).toArray(Double[]::new)
+                    Arrays.stream(values).map(value -> value * rightVal).toArray(Double[]::new)
             );
         }
         return super.addAsLeft(right);
@@ -45,9 +40,30 @@ public class VectorValue extends AbstractValue {
             case "length":
                 throw new NotImplementedException("TODO");
             case "dimension":
-                throw new NotImplementedException("TODO");
+                return new IntValue(values.length);
             default:
                 return super.getChild(name);
         }
+    }
+
+    public static AbstractValue makeCreateFunc() {
+        return new AbstractValue() {
+            @Override
+            public Value call(Value... args) {
+                return new VectorValue(args);
+            }
+        };
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof VectorValue))
+            return false;
+        return Arrays.equals(this.values,((VectorValue) obj).values);
+    }
+
+    @Override
+    public String toString() {
+        return "Vector" + Arrays.toString(values);
     }
 }
