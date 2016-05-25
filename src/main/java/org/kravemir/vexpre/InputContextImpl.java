@@ -1,6 +1,8 @@
 package org.kravemir.vexpre;
 
 import org.kravemir.vexpre.api.InputContext;
+import org.kravemir.vexpre.api.VariableNotFoundException;
+import org.kravemir.vexpre.values.DoubleValue;
 
 import java.util.HashMap;
 
@@ -10,19 +12,35 @@ import java.util.HashMap;
 public class InputContextImpl implements InputContext {
 
 
-    private final HashMap<String, Double> hashMap = new HashMap<String, Double>();
+    private final HashMap<String, AbstractValue> hashMap = new HashMap<String, AbstractValue>();
 
     @Override
-    public Double get(String name) {
+    public AbstractValue get(String name) {
         return hashMap.get(name);
     }
 
     @Override
-    public Double getOrDefault(String name, Double _default) {
+    public AbstractValue getOrDefault(String name, AbstractValue _default) {
         return hashMap.getOrDefault(name,_default);
     }
 
-    public void put(String name, Double value) {
+    @Override
+    public AbstractValue getOrThrow(String name) throws VariableNotFoundException {
+        if(name != null && !name.equals("")) {
+            AbstractValue value = hashMap.getOrDefault(name,null);
+            if(value != null)
+                return value;
+        }
+        throw new VariableNotFoundException();
+    }
+
+    public void put(String name, AbstractValue value) {
         hashMap.put(name,value);
     }
+
+    public void put(String name, double value) {
+        put(name, new DoubleValue(value));
+    }
+
+
 }

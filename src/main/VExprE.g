@@ -34,7 +34,7 @@ mult returns [Value value]
 
 atom returns [Value value]
     :   n=FNUM { $value = new DoubleValue($n.text); }
-    |   i=IDENTIFIER { String name = $i.text; $value = new DoubleValue(name != null ? inputContext.getOrDefault(name, 0.0) : 0.0); }
+    |   i=IDENTIFIER { String name = $i.text; $value = inputContext.getOrThrow(name); }
     |   '(' exp=add ')' { $value = $exp.value; }
     ;
 
