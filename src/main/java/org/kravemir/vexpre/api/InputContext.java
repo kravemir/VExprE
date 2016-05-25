@@ -1,11 +1,12 @@
 package org.kravemir.vexpre.api;
 
-import java.util.Map;
+import org.kravemir.vexpre.AbstractValue;
 
 /**
  * Created by miroslav on 5/1/16.
  */
 public interface InputContext {
-    Double get(String name);
-    Double getOrDefault(String name, Double _default);
+    AbstractValue get(String name);
+    AbstractValue getOrDefault(String name, AbstractValue _default);
+    AbstractValue getOrThrow(String name) throws VariableNotFoundException;
 }
