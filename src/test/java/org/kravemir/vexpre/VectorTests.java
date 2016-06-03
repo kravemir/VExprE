@@ -18,7 +18,7 @@ public class VectorTests extends AbstractParserTest {
     }
 
     @Test
-    public void operatorTests() {
+    public void operatorTests() throws Exception  {
         /* TODO
          * operations:
          *  - scalar x vector: *
@@ -31,7 +31,7 @@ public class VectorTests extends AbstractParserTest {
     }
 
     @Test
-    public void functionTests() {
+    public void functionTests() throws Exception  {
         /* TODO
          * functions:
          *  length
