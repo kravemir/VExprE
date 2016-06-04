@@ -3,18 +3,39 @@ VExprE
 
 Just a simple **V**ector **Expr**ession **E**valuator.
 
+About
+-----
+
 Features:
 
- * structured: `child.access`, `calls()`, `method.calls()`
- * custom input context for expression evaluation:
-    * immutable variables
-    * functions (callable variables)
- * extensible - define own types and functions, overload operators
- * (will have) included geometry pack:
+ * **structured** expression language: `child.access`, `calls()`, `method.calls()`
+ * configurable **evaluation context**:
+   * define **immutable input** variables
+   * define **own functions** (callable variables)
+ * **extensible** functinoality:
+   * define **own functions**
+   * define **own types**, may **overload operators**: `+`, `-`, `*`, `/`
+ * (will have) included mathematical/geometry feature pack:
     * vector and matrix types
     * geometry operations and functions
 
-Examples:
+Used technologies:
+
+ * **Java SE 8** (or 7? - TODO, check)
+ * **JavaCC** - parser compilation, **no extra runtime dependencies**
+
+Usage
+-----
+
+### Stand-alone:
+
+TODO
+
+### Embed to you project:
+
+TODO
+
+### Examples:
 
 ````
 TODO ^_^
