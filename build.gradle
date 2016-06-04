@@ -1,8 +1,7 @@
 plugins {
+    id "java"
     id "ca.coglinc.javacc" version "2.3.1"
 }
-
-apply plugin: 'java'
 
 group 'org.kravemir.vexpre'
 version '0.1'
